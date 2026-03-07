@@ -1,5 +1,5 @@
-"""write a code to clean the employee data by removing any rows that contain missing values. 
-The data is stored in a CSV file called "employee.csv". 
+"""Clean CSV file without using Pandas 
+The data is stored in a CSV file called "employees.csv". 
 The cleaned data should be stored in a new CSV file called "cleaned_employee_data.csv"."""
 
 #import csv file and convert the csv rows into a list of dictionaries
@@ -39,3 +39,11 @@ for row in unique_data:  #iterate through each row in the unique_data list
             except ValueError:         #If both conversions fail, it will pass and keep the original value as a string.
                 pass
 print("Data after converting data types:", unique_data)
+
+#write the cleaned data back to a new CSV file
+with open("cleaned_employee_data.csv","w",newline="") as file:
+    if unique_data:  #check if unique_data is not empty
+        writer=csv.DictWriter(file, fieldnames=unique_data[0].keys())  #use the keys of the first dictionary as fieldnames for the CSV
+        writer.writeheader()  #write the header row to the CSV file
+        writer.writerows(unique_data)  #write the cleaned data rows to the CSV file
+
